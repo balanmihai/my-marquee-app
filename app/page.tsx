@@ -67,7 +67,7 @@ const Home = () => {
         >
           <Marquee
             pauseOnClick
-            speed="300"
+            speed={300}
             gradient
             gradientColor="white"
             gradientWidth=" 200"
