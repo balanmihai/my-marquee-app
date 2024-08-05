@@ -1,12 +1,30 @@
 "use client";
 import "./globals.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Marquee from "react-fast-marquee";
 
 const Home = () => {
   const [word, setWord] = useState("");
   const [isPushed, setIsPushed] = useState(false);
+  const [isPlayed, setIsPlayed] = useState(false);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.code === "Space") {
+        // Execute your code here
+        setIsPlayed((isPlayed) => !isPlayed);
+      }
+    };
+
+    // Add event listener for keydown event
+    window.addEventListener("keydown", handleKeyDown);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
 
   return (
     <>
@@ -60,19 +78,14 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <div
-          className={
-            "bg-slate-900 flex justify-center items-center flex-col w-screen h-screen"
-          }
-        >
+        <div className={"bg-slate-900 flex w-screen h-screen overflow-none"}>
           <Marquee
-            pauseOnClick
-            speed={300}
-            gradient
-            gradientColor="white"
-            gradientWidth=" 200"
+            className="flex justify-between"
+            play={isPlayed}
+            speed={350}
+            direction="left"
           >
-            <h1 className="mb-4 mr-72 text-10xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h1 className="ml-128 text-10xl font-bold tracking-tight text-gray-900 dark:text-white">
               {word}
             </h1>
           </Marquee>
